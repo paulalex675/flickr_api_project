@@ -3,5 +3,24 @@
 <p>Hi, lets search for some photos from Flickr. <br>
   What's your flickr ID?
 </p>
+<% if params[:user_id].nil? %>
+  <%= render 'search_form' %>
+<% else %>
+  <%= render 'search_form' %>
+  <% if params[:user_id].empty? %>
+   <h2>These are some of the most recent pictures uploaded to Flickr</h2>
+  <% else %>
+    <h2>These are pictures uploaded to Flickr by <%= params[:user_id] %></h2>
+  <% end %>
 
-<%= render 'search_form' %>
+  <% @photos.each do |img| %>
+    <%= image_tag Flickr.url(img) %>
+  <%end%>
+<% end %>
+  <% flash.each do |type, msg| %>
+  <br>
+    <div style="color:red">
+      <%= msg %>
+    </div>
+    <br>
+  <% end %>
